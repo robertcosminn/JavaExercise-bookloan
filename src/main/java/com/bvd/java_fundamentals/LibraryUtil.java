@@ -167,7 +167,12 @@ public class LibraryUtil {
     // get members who borrowed books from at least K genres
     protected static List<String> membersWithGenreDiversity(final List<BookLoan> loans, final int k) {
         // Write your code here and replace the return statement
-        return Collections.emptyList();
+
+        Map<String, Set<String>> groupingMembersByGenre = loans.stream().collect(Collectors.groupingBy(BookLoan::getMemberID, Collectors.mapping(BookLoan::getGenre, Collectors.toSet())));
+
+        List<String> transformed = groupingMembersByGenre.entrySet().stream().filter(entry -> entry.getValue().size() >= k).map(Map.Entry::getKey).collect(Collectors.toList());
+
+        return transformed;
     }
 
     // find the first book title containing a substring (case-insensitive)
