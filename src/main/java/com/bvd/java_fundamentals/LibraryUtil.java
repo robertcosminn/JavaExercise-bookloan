@@ -159,7 +159,12 @@ public class LibraryUtil {
 
         Map<String, Long> countsPerAuthor = loans.stream().collect(Collectors.groupingBy(BookLoan::getAuthor, Collectors.counting()));
 
-        List<String> topN = countsPerAuthor.entrySet().stream().sorted().limit(n).map(entry -> entry.getKey()).collect(Collectors.toList());
+        List<String> topN = countsPerAuthor
+                .entrySet().stream()
+                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+                .limit(n)
+                .map(entry -> entry.getKey())
+                .collect(Collectors.toList());
 
         return topN;
     }

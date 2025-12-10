@@ -50,4 +50,8 @@ public class BookLoan {
         return daysLoaned;
     }
 
+    public String toString(){
+        return ("loanID= " + getLoanID() + " memberID= " + getMemberID() + " loanDate= " + getLoanDate() + " bookTitle= " + getBookTitle() + " genre= " + getGenre() + " author= " + getAuthor() + " daysLoaned= " + getDaysLoaned());
+    }
+
 }
