@@ -145,7 +145,13 @@ public class LibraryUtil {
     // sorted alphabetically by genre
     protected static Map<String, Long> loansByGenre(final List<BookLoan> loans) {
         // Write your code here and replace the return statement
-        return Collections.emptyMap();
+
+        Map<String, Long> countsPerGenre = loans.stream().collect(Collectors.groupingBy(BookLoan::getGenre, Collectors.counting()));
+
+        //sortam cu TreeMap
+        Map<String, Long> sorted = new TreeMap<>(countsPerGenre);
+
+        return sorted;
     }
 
     // get top "n" authors by number of loans
