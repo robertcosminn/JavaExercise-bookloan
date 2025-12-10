@@ -108,10 +108,12 @@ public class LibraryUtil {
 
 
                 LocalDate loanDate = null;
+                if(aux_loanDate != null && !aux_loanDate.isBlank()) {
                 try {
                     loanDate = LocalDate.parse(aux_loanDate);
                 }catch (Exception e){
                     loanDate = null;
+                    }
                 }
 
                 Integer daysLoaned = null;
