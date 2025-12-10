@@ -5,6 +5,7 @@ import com.bvd.java_fundamentals.model.BookLoan;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -24,10 +25,10 @@ public class LibraryUtil {
         List<String> lines;
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/loans/libraryLoans.csv"));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemClassLoader().getResourceAsStream("/loans/libraryLoans.csv")));
             lines = reader.lines().collect(Collectors.toList());
             return lines;
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             System.out.println("File not found");
         }
 
@@ -38,6 +39,28 @@ public class LibraryUtil {
     // return a map of "valid" and "malformed" lines as keys and list of BookLoan objects as values
     protected static Map<String, List<BookLoan>> parseCsvLines(final List<String> file) {
         // Write your code here and replace the return statement
+
+        Map<String, List<BookLoan>> result = new HashMap<>();
+        List<BookLoan> valid = new ArrayList<>();
+        List<BookLoan> malformed = new ArrayList<>();
+
+        for (String line : file){
+            if(line == null || line.isBlank())
+                continue;
+
+            //split
+            String[] parts = line.split(",");
+
+            //trim
+            List<String> cleanFields = new ArrayList<>();
+            for (String p : parts)
+                cleanFields.add(p.trim());
+
+            if (!cleanFields.isEmpty() && cleanFields.get(cleanFields.size() - 1).isEmpty())
+                cleanFields.remove(cleanFields.size() - 1);
+        }
+
+
         return Collections.emptyMap();
     }
 
