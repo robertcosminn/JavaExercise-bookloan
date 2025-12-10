@@ -93,14 +93,49 @@ public class LibraryUtil {
 
 
                 BookLoan malformedBookLoan = new BookLoan(loanID, memberID, loanDate, bookTitle, genre, author, daysLoaned);
-
                 malformed.add(malformedBookLoan);
                 continue;
+
+            }else {
+
+                String loanID = cleanFields.get(0);
+                String memberID = cleanFields.get(1);
+                String aux_loanDate = cleanFields.get(2);
+                String bookTitle = cleanFields.get(3);
+                String genre = cleanFields.get(4);
+                String author = cleanFields.get(5);
+                String aux_daysLoaned = cleanFields.get(6);
+
+
+                LocalDate loanDate = null;
+                try {
+                    loanDate = LocalDate.parse(aux_loanDate);
+                }catch (Exception e){
+                    loanDate = null;
+                }
+
+                Integer daysLoaned = null;
+                try {
+                    daysLoaned = Integer.parseInt(aux_daysLoaned);
+                }catch (Exception e){
+                    daysLoaned = null;
+                }
+
+                boolean isValid = (loanDate != null && daysLoaned != null);
+
+                BookLoan maybeValidLoan = new BookLoan(loanID, memberID, loanDate, bookTitle, genre, author, daysLoaned);
+
+                if (isValid){
+                    valid.add(maybeValidLoan);
+                }else {
+                    malformed.add(maybeValidLoan);
+                }
 
             }
         }
 
-
+        result.put("valid", valid);
+        result.put("malformed", malformed);
         return Collections.emptyMap();
     }
 
