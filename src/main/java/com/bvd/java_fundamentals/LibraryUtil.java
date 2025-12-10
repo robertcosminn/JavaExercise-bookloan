@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.InputStreamReader;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -58,6 +59,45 @@ public class LibraryUtil {
 
             if (!cleanFields.isEmpty() && cleanFields.get(cleanFields.size() - 1).isEmpty())
                 cleanFields.remove(cleanFields.size() - 1);
+
+            //
+
+            if(cleanFields.size() != 7){
+                //
+                String loanID = cleanFields.size() > 0 ? cleanFields.get(0) : null;
+                String memberID = cleanFields.size() > 1 ? cleanFields.get(1) : null;
+                String aux_loanDate = cleanFields.size() > 2 ? cleanFields.get(2) : null;
+                String bookTitle = cleanFields.size() > 3 ? cleanFields.get(3) : null;
+                String genre = cleanFields.size() > 4 ? cleanFields.get(4) : null;
+                String author = cleanFields.size() > 5 ? cleanFields.get(5) : null;
+                String aux_daysLoaned = cleanFields.size() > 6 ? cleanFields.get(6) : null;
+
+                LocalDate loanDate = null;      //declar un obiect de tip LocalDate null ca sa pot sa stochez in el data din parsarea stringului auxLoanDate, daca nu merge il las null
+                if(aux_loanDate != null && !aux_loanDate.isBlank()){
+                    try{
+                        loanDate = LocalDate.parse(aux_loanDate);
+                    }catch (Exception e){
+                        loanDate = null;
+                    }
+                }
+
+
+                Integer daysLoaned = null;
+                if(aux_daysLoaned != null && !aux_daysLoaned.isBlank()){
+                    try{
+                        daysLoaned = Integer.parseInt(aux_daysLoaned);
+                    }catch (Exception e){
+                        daysLoaned = null;
+                    }
+                }
+
+
+                BookLoan malformedBookLoan = new BookLoan(loanID, memberID, loanDate, bookTitle, genre, author, daysLoaned);
+
+                malformed.add(malformedBookLoan);
+                continue;
+
+            }
         }
 
 
