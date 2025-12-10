@@ -1,6 +1,9 @@
 package com.bvd.java_fundamentals;
 
+import com.bvd.java_fundamentals.model.BookLoan;
+
 import java.util.List;
+import java.util.Map;
 
 import static com.bvd.java_fundamentals.LibraryUtil.findFirstBookContaining;
 import static com.bvd.java_fundamentals.LibraryUtil.isBookPresent;
@@ -37,7 +40,7 @@ import static com.bvd.java_fundamentals.LibraryUtil.topAuthorsByLoans;
  */
 public class LibraryAnalytics {
 
-    protected static List<String> loadedFile = loadResourceFile("");
+    protected static List<String> loadedFile = loadResourceFile("loans/libraryLoans.csv");
 
     /* The expected output of the main method is:
         Loaded 34 entries from the CSV file.
@@ -50,14 +53,17 @@ public class LibraryAnalytics {
         Is book present: 'Harry Potter': false
     */
     public static void main(String[] args) {
-        var loans = parseCsvLines(loadedFile);
+        Map<String, List<BookLoan>> loans = parseCsvLines(loadedFile);
+        List<BookLoan> validLoans = loans.get("valid");
+        List<BookLoan> malformedLoans = loans.get("malformed");
+
         System.out.println("Loaded %s entries from the CSV file.".formatted(loadedFile.size()));
         System.out.println("Valid loans: " + loans.get("valid").size());
         System.out.println("Malformed loans: " + loans.get("malformed").size());
-        System.out.println("Loans by genre: " + loansByGenre(loans));
-        System.out.println("Top 2 authors: " + topAuthorsByLoans(loans, 2));
-        System.out.println("Members with genre diversity (>=3 genres): " + membersWithGenreDiversity(loans, 3));
-        System.out.println("First book containing 'Dune': " + findFirstBookContaining(loans, "Dune"));
-        System.out.println("Is book present: 'Harry Potter': " + isBookPresent(loans, "Harry Potter"));
+        System.out.println("Loans by genre: " + loansByGenre(validLoans));
+        System.out.println("Top 2 authors: " + topAuthorsByLoans(validLoans, 2));
+        System.out.println("Members with genre diversity (>=3 genres): " + membersWithGenreDiversity(validLoans, 3));
+        System.out.println("First book containing 'Dune': " + findFirstBookContaining(validLoans, "Dune"));
+        System.out.println("Is book present: 'Harry Potter': " + isBookPresent(validLoans, "Harry Potter"));
     }
 }

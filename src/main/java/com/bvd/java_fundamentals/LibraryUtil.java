@@ -26,7 +26,7 @@ public class LibraryUtil {
         List<String> lines;
 
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemClassLoader().getResourceAsStream("/loans/libraryLoans.csv")));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemClassLoader().getResourceAsStream("loans/libraryLoans.csv")));
             lines = reader.lines().collect(Collectors.toList());
             return lines;
         } catch (Exception e) {
@@ -189,6 +189,6 @@ public class LibraryUtil {
     // checks if the book is present in the loans (case-insensitive)
     protected static Boolean isBookPresent(final List<BookLoan> loans, final String book) {
         // Write your code here and replace the return statement
-        return null;
+        return loans.stream().anyMatch(loan -> loan.getBookTitle() != null && loan.getBookTitle().contains(book.toLowerCase()));
     }
 }
