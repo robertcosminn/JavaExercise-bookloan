@@ -1,16 +1,15 @@
 package com.bvd.java_fundamentals.model;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class BookLoan {
 
-    private String loanID;
-    private String memberID;
-    private LocalDate loanDate;
-    private String bookTitle;
-    private String genre;
-    private String author;
-    private Integer daysLoaned;
+    private final String loanID;
+    private final String memberID;
+    private final LocalDate loanDate;
+    private final String bookTitle;
+    private final String genre;
+    private final String author;
+    private final Integer daysLoaned;
 
 
     public BookLoan(String loanID, String memberID, LocalDate loanDate, String bookTitle, String genre, String author, Integer daysLoaned){

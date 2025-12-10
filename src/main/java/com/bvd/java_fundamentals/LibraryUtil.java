@@ -2,10 +2,11 @@ package com.bvd.java_fundamentals;
 
 import com.bvd.java_fundamentals.model.BookLoan;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /*
  * Implement the methods below so that the requirements are met.
@@ -19,6 +20,17 @@ public class LibraryUtil {
     // load resource file from resources folder
     static List<String> loadResourceFile(final String fileName) {
         // Write your code here and replace the return statement
+
+        List<String> lines;
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/loans/libraryLoans.csv"));
+            lines = reader.lines().collect(Collectors.toList());
+            return lines;
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
+
         return Collections.emptyList();
     }
 
