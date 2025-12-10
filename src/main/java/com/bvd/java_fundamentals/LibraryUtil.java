@@ -27,7 +27,7 @@ public class LibraryUtil {
 
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemClassLoader().getResourceAsStream("loans/libraryLoans.csv")));
-            lines = reader.lines().collect(Collectors.toList());
+            lines = reader.lines().map(String::trim).filter(l -> !l.isEmpty()).collect(Collectors.toList());
             return lines;
         } catch (Exception e) {
             System.out.println("File not found");
@@ -123,7 +123,14 @@ public class LibraryUtil {
                     daysLoaned = null;
                 }
 
-                boolean isValid = (loanDate != null && daysLoaned != null);
+                boolean isValid =
+                        (loanID != null && !loanID.isBlank() &&
+                                memberID != null && !memberID.isBlank() &&
+                                bookTitle != null && !bookTitle.isBlank() &&
+                                genre != null && !genre.isBlank() &&
+                                author != null && !author.isBlank() &&
+                                loanDate != null &&
+                                daysLoaned != null);
 
                 BookLoan maybeValidLoan = new BookLoan(loanID, memberID, loanDate, bookTitle, genre, author, daysLoaned);
 
