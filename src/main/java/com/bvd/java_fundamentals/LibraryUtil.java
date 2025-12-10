@@ -136,7 +136,7 @@ public class LibraryUtil {
 
         result.put("valid", valid);
         result.put("malformed", malformed);
-        return Collections.emptyMap();
+        return result;
     }
 
     // count loans per genre
